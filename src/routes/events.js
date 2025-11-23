@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('@prisma/client');
-
-const prisma = new PrismaClient();
+const prisma = require('../lib/prisma');
 
 // GET /api/events - 모든 이벤트 조회
 router.get('/', async (req, res) => {
@@ -14,6 +12,7 @@ router.get('/', async (req, res) => {
     });
     res.json(events);
   } catch (error) {
+    console.error('Error fetching events:', error);
     res.status(500).json({ error: 'Failed to fetch events' });
   }
 });
@@ -32,6 +31,7 @@ router.get('/:id', async (req, res) => {
     
     res.json(event);
   } catch (error) {
+    console.error('Error fetching event:', error);
     res.status(500).json({ error: 'Failed to fetch event' });
   }
 });
@@ -45,6 +45,7 @@ router.post('/', async (req, res) => {
     });
     res.status(201).json(event);
   } catch (error) {
+    console.error('Error creating event:', error);
     res.status(500).json({ error: 'Failed to create event' });
   }
 });
@@ -59,6 +60,7 @@ router.put('/:id', async (req, res) => {
     });
     res.json(event);
   } catch (error) {
+    console.error('Error updating event:', error);
     res.status(500).json({ error: 'Failed to update event' });
   }
 });
@@ -71,6 +73,7 @@ router.delete('/:id', async (req, res) => {
     });
     res.json({ message: 'Event deleted successfully' });
   } catch (error) {
+    console.error('Error deleting event:', error);
     res.status(500).json({ error: 'Failed to delete event' });
   }
 });
